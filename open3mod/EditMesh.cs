@@ -366,7 +366,7 @@ namespace open3mod
                         }
                     });
             }
-            catch (Exception ex)
+            catch (Exception /*ex*/)
             {
                 // TODO: Log.
                 // Unfortunately, KDTree rarely crashes.
