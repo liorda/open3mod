@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using Assimp;
+using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System;
@@ -15,6 +16,11 @@ namespace open3mod
     public static class OverlayRect2D
     {
         private static Color4 _defaultColor = new Color4(1.0f, 1.0f, 0.0f, 0.5f);
+
+        public static void DrawRect2D(Vector3D position, uint size, bool fill = true, Color4? color = null)
+        {
+            DrawRect2D(AssimpToOpenTk.FromVector(position), size, fill, color);
+        }
 
         public static void DrawRect2D(Vector3 position, uint size, bool fill = true, Color4? color = null)
         {
@@ -81,7 +87,12 @@ namespace open3mod
 
         #region helpers
 
-        private static Vector2 GetScreenCoordinates(Vector3 ObjectCoordinate)
+        public static Vector2 GetScreenCoordinates(Vector3D ObjectCoordinate)
+        {
+            return GetScreenCoordinates(AssimpToOpenTk.FromVector(ObjectCoordinate));
+        }
+
+        public static Vector2 GetScreenCoordinates(Vector3 ObjectCoordinate)
         {
             // adopted from http://stackoverflow.com/a/11427664
 
