@@ -212,6 +212,7 @@
     <Compile Include="OrbitCameraController.cs" />
     <Compile Include="OverlayLightSource.cs" />
     <Compile Include="OverlayNormals.cs" />
+    <Compile Include="OverlayRect2D.cs" />
     <Compile Include="OverlaySkeleton.cs" />
     <Compile Include="ParallelForEach.cs" />
     <Compile Include="PickingCameraController.cs" />
