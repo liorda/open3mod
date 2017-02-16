@@ -19,6 +19,7 @@
 ///////////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Diagnostics;
 using Assimp;
 using System.Diagnostics;
 
@@ -31,6 +32,8 @@ namespace open3mod
             : base(scene)
         { }
 
+        private readonly ShaderGen _shaderGen = new ShaderGen();
+
 
 #if DEBUG
         ~MaterialMapperModernGl()
@@ -41,19 +44,41 @@ namespace open3mod
 
         public override void Dispose()
         {
+            _shaderGen.Dispose();
             GC.SuppressFinalize(this);
         }
 
 
         public override void ApplyMaterial(Mesh mesh, Material mat, bool textured, bool shaded)
         {
-            
+            ShaderGen.GenFlags flags = 0;
+            if (textured)
+            {
+                flags |= ShaderGen.GenFlags.ColorMap;
+            }
+            if (shaded)
+            {
+                flags |= ShaderGen.GenFlags.Lighting;
+            }
+            Shader shader = _shaderGen.GenerateOrGetFromCache(flags);
+            shader.BindIfNecessary();
         }
+
+
+        //public override void UnapplyMaterial(Mesh, Material, Tex)
 
 
         public override void ApplyGhostMaterial(Mesh mesh, Material material, bool shaded)
         {
             
+        }
+
+        public override void BeginScene(Renderer renderer)
+        {         
+        }
+
+        public override void EndScene(Renderer renderer)
+        {
         }
     }
 }
